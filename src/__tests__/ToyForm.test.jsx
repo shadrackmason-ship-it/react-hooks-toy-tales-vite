@@ -12,7 +12,7 @@ describe("ToyForm Submission", () => {
       id: "3810fqhrquhf9fnqnc0"
     };
 
-    // 🔥 IMPORTANT: mock BOTH initial fetch AND POST response
+    // mock initial GET response
     global.setFetchResponse([]);
 
     const { getByPlaceholderText, getByText } = render(<App />);
@@ -26,8 +26,8 @@ describe("ToyForm Submission", () => {
       target: { value: newToy.image },
     });
 
-    // submit
-    fireEvent.click(getByText("Add a Toy"));
+    // submit form (FIXED BUTTON TEXT)
+    fireEvent.click(getByText("Create New Toy"));
 
     // wait for UI update
     await waitFor(() => {

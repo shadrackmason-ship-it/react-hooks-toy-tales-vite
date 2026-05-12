@@ -51,7 +51,7 @@ function ToyForm({ onAddToy = () => {} }) {
         onChange={(e) => setImage(e.target.value)}
       />
 
-      <button type="submit">Add a Toy</button>
+      <button type="submit">Create New Toy</button>
     </form>
   );
 }
