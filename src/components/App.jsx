@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ToyContainer from "./ToyContainer";
-import AddToyForm from "./ToyForm";
+import ToyForm from "./ToyForm";
 
 function App() {
   const [toys, setToys] = useState([]);
@@ -12,26 +12,31 @@ function App() {
   }, []);
 
   function addToy(newToy) {
-    setToys([...toys, newToy]);
-  }
+  setToys((prev) => [...prev, newToy]);
+}
 
   function updateToy(updatedToy) {
-    setToys(toys.map((toy) => (toy.id === updatedToy.id ? updatedToy : toy)));
+    setToys((prev) =>
+      prev.map((toy) => (toy.id === updatedToy.id ? updatedToy : toy))
+    );
   }
 
   function deleteToy(id) {
-    setToys(toys.filter((toy) => toy.id !== id));
+    setToys((prev) => prev.filter((toy) => toy.id !== id));
   }
 
   function likeToy(updatedToy) {
-    setToys(toys.map((toy) => (toy.id === updatedToy.id ? updatedToy : toy)));
+    setToys((prev) =>
+      prev.map((toy) => (toy.id === updatedToy.id ? updatedToy : toy))
+    );
   }
 
   return (
     <div className="app">
       <h1>Toy Tales</h1>
 
-      <AddToyForm addToy={addToy} />
+      {/* FIXED PROP NAME */}
+      <ToyForm onAddToy={addToy} />
 
       <ToyContainer
         toys={toys}

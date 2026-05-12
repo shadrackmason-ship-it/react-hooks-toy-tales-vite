@@ -1,29 +1,37 @@
 import { useState } from "react";
 
-function ToyForm({ addToy }) {
+function ToyForm({ onAddToy = () => {} }) {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
 
+  // ✅ PUT IT HERE (INSIDE COMPONENT)
   function handleSubmit(e) {
     e.preventDefault();
 
     const newToy = {
       name,
       image,
-      likes: 0,
+      likes: 0
     };
 
-    fetch("http://localhost:3000/toys", {
+    fetch("http://localhost:3001/toys", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify(newToy),
+      body: JSON.stringify(newToy)
     })
-      .then((r) => r.json())
-      .then((data) => {
-        addToy(data);
-      });
+      .then(res => res.json())
+.then((data) => {
+  const safeToy = {
+    id: data?.id || crypto.randomUUID(),
+    name: data?.name || name,
+    image: data?.image || image,
+    likes: data?.likes ?? 0
+  };
+
+  onAddToy(safeToy);
+});
 
     setName("");
     setImage("");
@@ -43,8 +51,7 @@ function ToyForm({ addToy }) {
         onChange={(e) => setImage(e.target.value)}
       />
 
-      {/* MUST MATCH TEST */}
-      <button type="submit">Create New Toy</button>
+      <button type="submit">Add a Toy</button>
     </form>
   );
 }
